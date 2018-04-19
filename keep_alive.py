@@ -5,6 +5,7 @@ from typing import Union, List
 import time
 import subprocess
 import log
+import threading
 
 
 class Incubator:
@@ -13,6 +14,7 @@ class Incubator:
         self.__processes = []
         self.__processes_appended = []
         self.__running = True
+        self.__lock = threading.Lock()
 
     def monitor(self):
         while self.__running:
@@ -22,14 +24,16 @@ class Incubator:
                 if code is not None and code != 0:
                     log.w(__name__, "Process is dead. PID={0} code={1}".format(process.pid, process.returncode))
                     args = process.args
+                    # print(process.communicate())
                     self.__processes.remove(process)
                     break
                 time.sleep(1)
             if args is not None:
                 self.incubate(args)
 
-            self.__processes.extend(self.__processes_appended)
-            self.__processes_appended.clear()
+            with self.__lock:
+                self.__processes.extend(self.__processes_appended)
+                self.__processes_appended.clear()
 
     def incubate(self, cmdline: Union[List[str], str]):
         if isinstance(cmdline, str):
@@ -40,11 +44,12 @@ class Incubator:
             stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
         )
         log.i(__name__, "Incubated process. PID={}".format(process.pid))
-        self.__processes_appended.append(process)
+        with self.__lock:
+            self.__processes_appended.append(process)
 
     def stop(self):
         self.__running = False
-        for process in self.processes:
+        for process in self.__processes:
             if process.poll() is None:
                 process.terminate()
             try:

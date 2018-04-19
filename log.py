@@ -12,7 +12,7 @@ LOCAL_TIMEZONE = timezone(timedelta(hours=datetime.now().hour-datetime.utcnow().
 __logger = getLogger("qb_incubator")
 __logger.setLevel(10)
 
-fh = logging.FileHandler('qb_incubator.log')
+fh = logging.FileHandler('/var/log/pyqb/qb_incubator.log')
 __logger.addHandler(fh)
 
 sh = logging.StreamHandler()
