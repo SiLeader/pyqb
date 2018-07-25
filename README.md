@@ -3,32 +3,46 @@ QB Process Incubator
 
 &copy; 2018 SiLeader and Cerussite.
 
-## 概要
-プロセス管理システムを含むシステムです。
+## Overview
+PyQB is process management system.
 
-プロセスが停止した時は自動的に同一のコマンドで再起動されます。
+If process executed by PyQB is dead, restart same command.
 
-## 起動方法
-このスクリプトは起動時にコマンドラインそのもの(--targetオプション)
-または、コマンドラインを生成する関数(commands())を含むスクリプトを指定(--scriptオプション)します。
+## How to use
+### --target TARGET
+If you want to execute simple command, use this option.
 
-起動されたプログラムのワーキングディレクトリがセットされていることは保証されていません。
+```sh
+pyqb --target "{COMMAND LINE}"
+```
 
-## --script
---scriptを指定した場合コマンドラインを生成する関数(commands())をもつPythonスクリプトを指定することができます。
+### --script SCRIPT
+If you use this option, you can execute many process.
 
-Pythonスクリプトはcommands()関数を必ず持ち、その返り値は文字列のリストになります。
-現状スクリプトは最初の一回のみ呼ばれます。
+SCRIPT is python script that has `commands` function or generator.
+`commands` function return List like object or generator.
 
-指定するスクリプトはフルパスが好ましいです。
-相対パスで指定した場合正しく動かない可能性があります。
+#### ex
+You want to execute these programs
 
-プログラムもシェルを介さない場合はフルパスで指定するべきです。
-スクリプトファイルもまた同様です。
+```sh
+PROGRAM arg_a
+PROGRAM arg_b
+PROGRAM arg_c
+```
 
-## --shell
-このオプションをつけるとコマンドの実行がシェルの中で行われます。
-不特定のユーザーがこのシステムにコマンドを送りうる場合は指定しないほうが好ましいです。
+Python script is
+
+```python
+def commands():
+    return ["PROGRAM arg_a", "PROGRAM arg_b", "PROGRAM arg_c"]
+```
+
+### --shell
+PyQB does not execute in a shell.
+PATH environment variable can not use in PyQB.
+
+If you want to execute in the command line shell, you set this option.
 
 ## License
 Apache License2.0

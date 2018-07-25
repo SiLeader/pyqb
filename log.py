@@ -12,11 +12,19 @@ LOCAL_TIMEZONE = timezone(timedelta(hours=datetime.now().hour-datetime.utcnow().
 __logger = getLogger("qb_incubator")
 __logger.setLevel(10)
 
-fh = logging.FileHandler('/var/log/pyqb/qb_incubator.log')
-__logger.addHandler(fh)
 
-sh = logging.StreamHandler()
-__logger.addHandler(sh)
+__ok = False
+
+
+def __init():
+    global __ok
+    if not __ok:
+        # fh = logging.FileHandler('/var/log/pyqb/qb_incubator.log')
+        # __logger.addHandler(fh)
+
+        sh = logging.StreamHandler()
+        __logger.addHandler(sh)
+        __ok = True
 
 
 def __message(level, tag, msg):
@@ -25,16 +33,20 @@ def __message(level, tag, msg):
 
 
 def i(tag, msg):
+    __init()
     __logger.info(__message("I", tag, msg))
 
 
 def w(tag, msg):
+    __init()
     __logger.warning(__message("W", tag, msg))
 
 
 def e(tag, msg):
+    __init()
     __logger.error(__message("E", tag, msg))
 
 
 def d(tag, msg):
+    __init()
     __logger.debug(__message("D", tag, msg))

@@ -80,7 +80,6 @@ def signal_handler(incubator: ka.Incubator):
 
 
 if __name__ == '__main__':
-    log.i(__name__, "Start QB Incubator")
 
     parser = argparse.ArgumentParser(
         prog="QB Process incubator",
@@ -100,8 +99,9 @@ if __name__ == '__main__':
     if args.script is None and args.target is None:
         log.e(__name__, "--script and --target are not set.")
         exit(1)
+    log.i(__name__, "Start QB Incubator")
 
     if args.script is not None:
         script_main(args.shell, args.script, args.socket)
     else:
-        target_main(args.shell, args.target, args.count, args.socket)
+        target_main(args.shell, args.target, args.target_count, args.socket)
