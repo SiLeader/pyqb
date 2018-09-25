@@ -56,7 +56,7 @@ def target_main(shell: bool, target_command: str, count: int, sock_file=None):
 def socket_incubator(sock_file: str, incubator: ka.Incubator, sock_type=socket.AF_UNIX):
     sock = socket.socket(sock_type, socket.SOCK_STREAM)
     sock.bind(sock_file)
-    sock.listen()
+    sock.listen(16)
 
     try:
         while True:
@@ -64,8 +64,8 @@ def socket_incubator(sock_file: str, incubator: ka.Incubator, sock_type=socket.A
             try:
                 while True:
                     data = conn.recv(1024)
-                    incubator.incubate(data)
-                    conn.send("OK")
+                    incubator.incubate(data.decode(encoding="utf-8"))
+                    conn.send(b"OK")
             finally:
                 conn.close()
     finally:
@@ -88,6 +88,7 @@ if __name__ == '__main__':
         add_help=True
     )
 
+    parser.add_argument("-n", "--name", help="name", action="store", default="qb_incubator")
     parser.add_argument("-s", "--script", help="Incubate script", action="store", default=None)
     parser.add_argument("-t", "--target", help="Target script name", action="store", default=None)
     parser.add_argument("-c", "--target-count", help="Target instance count", action="store", type=int, default=1)
@@ -95,11 +96,12 @@ if __name__ == '__main__':
     parser.add_argument("--socket", help="Unix domain socket path", action="store", default=None)
 
     args = parser.parse_args()
+    log.init(args.name)
 
+    log.i(__name__, "Start QB Incubator")
     if args.script is None and args.target is None:
         log.e(__name__, "--script and --target are not set.")
         exit(1)
-    log.i(__name__, "Start QB Incubator")
 
     if args.script is not None:
         script_main(args.shell, args.script, args.socket)
