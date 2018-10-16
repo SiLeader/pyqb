@@ -50,6 +50,11 @@ def main():
         if len(group) > 0:
             break
 
+    while True:
+        log_path = input("Log file path (Required) >>> ")
+        if len(log_path) > 0:
+            break
+
     file_dir = str(pathlib.Path(__file__).absolute().parent)
     with open("{}/pyqb.service.skeleton".format(file_dir)) as pss_fp:
         service = pss_fp.read()
@@ -61,6 +66,14 @@ def main():
 
         with open("{}/{}-pyqb.service".format(file_dir, target), "w") as pfp:
             pfp.write(service)
+
+    with open("{}/rsyslog.conf.skeleton".format(file_dir)) as rcs_fp:
+        conf = rcs_fp.read()
+        conf = conf.replace("${NAME}", target)
+        conf = conf.replace("${LOG_PATH}", log_path)
+
+        with open("{}/{}-pyqb.conf".replace(file_dir, target), "w") as pfp:
+            pfp.write(conf)
 
 
 if __name__ == '__main__':
