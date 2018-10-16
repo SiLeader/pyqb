@@ -17,7 +17,7 @@
    limitations under the License.
 """
 
-import log
+from utils import log
 import argparse
 import signal
 import sys

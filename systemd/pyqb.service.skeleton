@@ -5,8 +5,8 @@ Description=PyQB ${TARGET} incubator process.
 Type=simple
 
 ExecStop=/bin/kill -INT $MAINPID
-ExecStart=/usr/bin/python3 ${PYQB_LOCATION} --script=${COMMAND_SCRIPT_LOCATION} --socket=/tmp/${SOCKET_NAME}.sock
-ExecReload=/bin/kill -INT $MAINPID && /usr/bin/python3 ${PYQB_LOCATION} --script=${COMMAND_SCRIPT_LOCATION} --socket=/tmp/${SOCKET_NAME}.sock
+ExecStart=/usr/bin/python3 ${PYQB_LOCATION} --script=${COMMAND_SCRIPT_LOCATION} --name=${TARGET} --socket=/tmp/${SOCKET_NAME}.sock
+ExecReload=/bin/kill -INT $MAINPID && /usr/bin/python3 ${PYQB_LOCATION} --script=${COMMAND_SCRIPT_LOCATION} --name=${TARGET} --socket=/tmp/${SOCKET_NAME}.sock
 
 KillMode=control-group
 Restart=always

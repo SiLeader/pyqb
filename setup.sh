@@ -24,5 +24,5 @@ cd systemd
 
 for file in `ls | grep *-pyqb.service`;do
     echo "Link $file created."
-    sudo ln -s `pwd`/$file /etc/systemd/system/$file
+    sudo ln -s `pwd`/${file} /etc/systemd/system/${file}
 done

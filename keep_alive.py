@@ -21,7 +21,7 @@
 from typing import Union, List
 import time
 import subprocess
-import log
+from utils import log
 import threading
 
 
