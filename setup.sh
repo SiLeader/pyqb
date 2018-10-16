@@ -18,7 +18,7 @@
 
 set -e
 
-/usr/bin/env python3 systemd/systemd_setup.py
+/usr/bin/env python3 config/systemd_setup.py
 
 cd systemd
 
