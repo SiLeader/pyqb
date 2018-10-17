@@ -28,8 +28,10 @@ for file in `ls | grep *-pyqb.service`;do
 done
 
 for file in `ls | grep logrotate-*-pyqb.conf`;do
-    sudo ln -s `pwd`/${file} /etc/logrotate.d/${file}
-    echo "Link $file created."
+    sudo cp `pwd`/${file} /etc/logrotate.d/${file}
+    sudo chown root:root /etc/logrotate.d/${file}
+
+    echo "Copy $file created."
 done
 
 for file in `ls | grep rsyslog-*-pyqb.conf`;do
