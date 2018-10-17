@@ -23,6 +23,16 @@ set -e
 cd systemd
 
 for file in `ls | grep *-pyqb.service`;do
-    echo "Link $file created."
     sudo ln -s `pwd`/${file} /etc/systemd/system/${file}
+    echo "Link $file created."
+done
+
+for file in `ls | grep logrotate-*-pyqb.conf`;do
+    sudo ln -s `pwd`/${file} /etc/logrotate.d/${file}
+    echo "Link $file created."
+done
+
+for file in `ls | grep rsyslog-*-pyqb.conf`;do
+    sudo ln -s `pwd`/${file} /etc/rsyslog.d/${file}
+    echo "Link $file created."
 done

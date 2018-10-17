@@ -1,0 +1,9 @@
+${LOG_PATH}/main.log {
+    missingok
+    compress
+    delaycompress
+    dateformat .%Y-%m-%d
+
+    daily
+    rotate 10
+}
