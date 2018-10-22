@@ -72,7 +72,7 @@ def main():
         conf = conf.replace("${NAME}", target)
         conf = conf.replace("${LOG_PATH}", log_path)
 
-        with open("{}/rsyslog-{}-pyqb.conf".replace(file_dir, target), "w") as pfp:
+        with open("{}/rsyslog-{}-pyqb.conf".format(file_dir, target), "w") as pfp:
             pfp.write(conf)
 
     with open("{}/logrotate.conf.skeleton".format(file_dir)) as rcs_fp:
@@ -80,7 +80,7 @@ def main():
         conf = conf.replace("${NAME}", target)
         conf = conf.replace("${LOG_PATH}", log_path)
 
-        with open("{}/logrotate-{}-pyqb.conf".replace(file_dir, target), "w") as pfp:
+        with open("{}/logrotate-{}-pyqb.conf".format(file_dir, target), "w") as pfp:
             pfp.write(conf)
 
 
