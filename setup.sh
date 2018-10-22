@@ -20,7 +20,7 @@ set -e
 
 /usr/bin/env python3 config/systemd_setup.py
 
-cd systemd
+cd config
 
 for file in `ls | grep *-pyqb.service`;do
     sudo ln -s `pwd`/${file} /etc/systemd/system/${file}
