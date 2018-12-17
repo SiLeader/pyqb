@@ -22,19 +22,21 @@ set -e
 
 cd config
 
+cwd=$(cd $(dirname $0); pwd)
+
 for file in `ls | grep *-pyqb.service`;do
-    sudo ln -s `pwd`/${file} /etc/systemd/system/${file}
+    sudo ln -s ${cwd}/${file} /etc/systemd/system/${file}
     echo "Link $file created."
 done
 
 for file in `ls | grep logrotate-*-pyqb.conf`;do
-    sudo cp `pwd`/${file} /etc/logrotate.d/${file}
+    sudo cp ${cwd}/${file} /etc/logrotate.d/${file}
     sudo chown root:root /etc/logrotate.d/${file}
 
     echo "Copy $file created."
 done
 
 for file in `ls | grep rsyslog-*-pyqb.conf`;do
-    sudo ln -s `pwd`/${file} /etc/rsyslog.d/${file}
+    sudo ln -s ${cwd}/${file} /etc/rsyslog.d/${file}
     echo "Link $file created."
 done
