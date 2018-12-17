@@ -18,7 +18,9 @@
 
 set -e
 
-/usr/bin/env python3 config/systemd_setup.py
+cwd=$(cd $(dirname $0); pwd)
+
+/usr/bin/env python3 ${cwd}/config/systemd_setup.py
 
 cd config
 
