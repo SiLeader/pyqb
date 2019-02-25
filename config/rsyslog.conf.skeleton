@@ -1,3 +1,8 @@
+$Umask 0000
+$FileOwner root
+$FileGroup adm
+$FileCreateMode 0644
+
 if $msg contains "${NAME}" then \
     ${LOG_PATH}/main.log
     & ~
