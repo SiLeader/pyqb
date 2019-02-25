@@ -1,9 +1,15 @@
-${LOG_PATH}/main.log {
+${LOG_PATH}/*.log {
     missingok
     compress
     delaycompress
-    dateformat .%Y-%m-%d
+    dateext
+    dateformat .%Y-%m-%d-%H
 
     daily
+    maxsize 10M
     rotate 10
+
+    postrotate
+        invoke-rc.d rsyslog rotate > /dev/null
+    endscript
 }
